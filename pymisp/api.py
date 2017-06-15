@@ -202,6 +202,8 @@ class PyMISP(object):
         try:
             to_return = response.json()
         except ValueError:
+            if response.ok:
+                return {'status': response.ok, 'response': response.text}
             logger.debug(response.text)
             raise PyMISPError('Unknown error: {}'.format(response.text))
 
